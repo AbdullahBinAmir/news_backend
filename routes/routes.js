@@ -367,8 +367,8 @@ router.post('/deleteuser', async (req, res) => {
 
 // Configure the Google authentication strategy
 passport.use(new GoogleStrategy({
-  clientID: '476751629274-7s99400oqt5lbnjqqkj75kfl08hbm6c6.apps.googleusercontent.com',
-  clientSecret: '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',
+  clientID: '929512267025-5h1tojde6nlqqr7uv4f5qa157pjs7iua.apps.googleusercontent.com',
+  clientSecret: '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',
   callbackURL: '/auth/google/callback',
 }, async (accessToken, refreshToken, profile, done) => {
   try {
