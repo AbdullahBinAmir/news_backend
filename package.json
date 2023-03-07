@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "backend APIS for BAUM NEWS APP",
   "main": "index.js",
-  "scripts": {
-    "start": "nodemon index.js"
-  },
   "author": "AIOBC",
   "license": "ISC",
   "dependencies": {
