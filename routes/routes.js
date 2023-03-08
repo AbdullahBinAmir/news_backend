@@ -9,12 +9,16 @@ const bcrypt = require("bcrypt")
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
-passport.serializeUser((user, done) => {
-  done(null, user);
-  })
-  passport.deserializeUser((user, done) => {
-  done(null, user)
-  })
+// Initialize passprt
+express().use(passport.initialize());
+express().use(passport.session());
+
+// passport.serializeUser((user, done) => {
+//   done(null, user);
+//   })
+//   passport.deserializeUser((user, done) => {
+//   done(null, user)
+//   })
 
 const saltRounds = 10;
 
@@ -365,6 +369,20 @@ router.post('/deleteuser', async (req, res) => {
     }
 })
 
+router.get(
+  '/auth/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+);
+
+// Google authentication callback route
+router.get(
+  '/auth/google/callback',
+  passport.authenticate('google'),
+  (req, res) => {
+      res.json('Account Created!')
+  }
+);
+
 // Configure the Google authentication strategy
 passport.use(new GoogleStrategy({
   clientID: '929512267025-5h1tojde6nlqqr7uv4f5qa157pjs7iua.apps.googleusercontent.com',
@@ -395,24 +413,6 @@ passport.use(new GoogleStrategy({
     done(error);
   }
 }));
-
-// Googe Oauth2
-router.get('/auth/google', passport.authenticate('google', {
-  scope: ['profile', 'email'],
-  }));
-
-  // Google Oauth2 callback url
-// Create a route to handle the Google authentication callback
-router.post('/auth/google/callback', (req, res, next) => {
-  passport.authenticate('google', { session: false }, (error, sessionToken) => {
-    if (error) {
-      return next(error);
-    }
-
-    // Send the session token to the React Native app
-    return res.send({ session_token: sessionToken });
-  })(req, res, next);
-});
 
 //Get by ID Method
 router.get('/getuserbyId', async (req, res) => {

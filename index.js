@@ -4,12 +4,13 @@ const cors = require("cors");
 const PORT = process.env.port || 8000;
 const https = require('https')
 const fs = require("fs");
-var passport = require('passport');
 
 const routes = require('./routes/routes');
+const initPassport = require('./routes/auth');
 const express = require('express');
 const mongoose = require('mongoose');
 const bp = require('body-parser')
+const passport = require("passport");
 const mongoString = process.env.DATABASE_URL;
 var corsOptions = {
     origin: "*"
@@ -28,8 +29,9 @@ database.once('connected', () => {
 })
 
 const app = express();
-// Initialize passprt
-app.use(passport.initialize());
+
+//init passport
+initPassport(app);
 
 app.use(bp.json())
 
@@ -38,6 +40,23 @@ app.use(bp.urlencoded({ extended: true }))
 app.use(cors(corsOptions));
 
 app.use('/api', routes)
+
+app.get(
+    '/auth/google',
+    passport.authenticate('google', { scope: ['profile', 'email'] })
+  );
+  
+  // Google authentication callback route
+app.get(
+    '/auth/google/callback',
+    passport.authenticate('google',{failureRedirect:'/auth/google'}),
+    (req, res) => {
+        res.redirect(
+    `Baum://app/SignIn?email=${req.user.email}/pass=${req.user.password}/status=${req.user.verified}`
+        )
+    }
+  );
+  
 
 // const options = {
 //     key: fs.readFileSync("./config/cert.key"),
