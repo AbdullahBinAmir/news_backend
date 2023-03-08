@@ -23,7 +23,7 @@ passport.use(
       {
         clientID: '929512267025-5h1tojde6nlqqr7uv4f5qa157pjs7iua.apps.googleusercontent.com',
         clientSecret: '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',
-        callbackURL: '/auth/google/callback',
+        callbackURL: 'https://lime-charming-horse.cyclic.app/auth/google/callback',
     }, (accessToken, refreshToken, profile, done) => {
         done(null, formatGoogle(profile._json));
       }));
