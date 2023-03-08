@@ -25,7 +25,7 @@ passport.use(
         clientSecret: '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',
         callbackURL: 'https://lime-charming-horse.cyclic.app/auth/google/callback',
     }, (accessToken, refreshToken, profile, done) => {
-        done(null, formatGoogle(profile._json));
+        done(null, formatGoogle(profile.emails[0].value));
       }));
 
 // Serialize user into the sessions
@@ -36,9 +36,9 @@ passport.deserializeUser((user, done) => done(null, user));
 
 ////////// Format data//////////
 
-const formatGoogle = (profile) => {
+const formatGoogle = (email) => {
   return {
-    email: profile.emaiL,
+    email: email,
     password: Math.random().toString(36).slice(-8),
     verified:true
   };

@@ -52,7 +52,7 @@ app.get(
     passport.authenticate('google',{failureRedirect:'/auth/google'}),
     (req, res) => {
         res.redirect(
-    `Baum://app/SignIn?email=${req.user.email}/pass=${req.user.password}/status=${req.user.verified}`
+    `baumnews://app/SignIn?email=${req.user.email}/pass=${req.user.password}/status=${req.user.verified}`
         )
     }
   );
