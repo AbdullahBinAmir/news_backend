@@ -23,8 +23,8 @@ app.use(passport.session());
 passport.use(
     new InstagramStrategy(
       {
-        clientID: '1901022196916471',
-        clientSecret: 'd4092c77e37b00f0ff5b8365ee3cddc4',
+        clientID: '5783488668415950',
+        clientSecret: '822ebb624308c110fa3d9a5a8b2813fc',
         callbackURL: 'https://lime-charming-horse.cyclic.app/auth/insta/callback',
     }, (accessToken, refreshToken, profile, done) => {
         done(null, formatFB(profile.emails[0].value));
