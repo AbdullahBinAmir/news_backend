@@ -36,7 +36,8 @@ passport.use(
         clientSecret: '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',
         callbackURL: 'https://lime-charming-horse.cyclic.app/auth/google/callback',
     }, (accessToken, refreshToken, profile, done) => {
-        done(null, formatGoogle(profile.emails[0].value,profile.id));
+        //done(null, formatGoogle(profile.emails[0].value,profile.id));
+        console.log(profile)
       }));
 
 // Serialize user into the sessions
