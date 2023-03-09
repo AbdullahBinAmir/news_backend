@@ -46,7 +46,7 @@ app.get(
     passport.authenticate('google', { scope: ['profile', 'email'] })
   );
 
- app.get("/auth/facebook", passport.authenticate("facebook")); 
+ app.get("/auth/facebook", passport.authenticate("facebook", { scope: ['email']})); 
 
 //once permission to exchange data is granted, a callback will be fired
 app.get(

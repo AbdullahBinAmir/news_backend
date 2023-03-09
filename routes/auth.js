@@ -1,6 +1,6 @@
 const express = require('express');
 const passport = require('passport');
-const FacebookStrategy = require('passport-facebook');
+const FacebookStrategy = require('passport-facebook').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const session = require("express-session");
 
@@ -36,8 +36,7 @@ passport.use(
         clientSecret: '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',
         callbackURL: 'https://lime-charming-horse.cyclic.app/auth/google/callback',
     }, (accessToken, refreshToken, profile, done) => {
-        //done(null, formatGoogle(profile.emails[0].value,profile.id));
-        console.log(profile)
+        done(null, formatGoogle(profile.emails[0].value,profile.id));
       }));
 
 // Serialize user into the sessions
