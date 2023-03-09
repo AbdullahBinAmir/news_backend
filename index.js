@@ -45,7 +45,20 @@ app.get(
     '/auth/google',
     passport.authenticate('google', { scope: ['profile', 'email'] })
   );
-  
+
+ app.get("/auth/facebook", passport.authenticate("facebook")); 
+
+//once permission to exchange data is granted, a callback will be fired
+app.get(
+    "/auth/facebook/callback",
+    passport.authenticate("facebook", { failureRedirect: "/auth/facebook" }),
+    // Redirect user back to the mobile app using deep linking
+    (req, res) => {
+      res.redirect(
+        `baumnews://app/SignIn?email=${req.user.email}/pass=${req.user.password}/status=${req.user.verified}`
+      );
+    }
+); 
   // Google authentication callback route
 app.get(
     '/auth/google/callback',

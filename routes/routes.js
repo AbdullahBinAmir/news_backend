@@ -85,6 +85,32 @@ router.post('/register', async (req, res) => {
     }
   });
   
+// Register route
+router.post('/loginwithgoogle', async (req, res) => {
+    try {
+      const { email, password } = req.query;
+  
+      // Check if user already exists
+      const user = await userModel.findOne({ email });
+      if (user) {
+        return res.status(200).json(user);
+      }
+      const hashedPwd = await bcrypt.hash(password, saltRounds);
+      // Save user to database
+      const newUser = new userModel({
+        email:email,
+        password: hashedPwd,
+        verified:true,
+      });
+      const dataToSave = await  newUser.save();
+      res.status(200).json(dataToSave)
+
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  });
+  
   // Verify email route
   router.get('/verify', async (req, res) => {
     const token = req.query.token;
