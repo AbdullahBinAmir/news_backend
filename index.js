@@ -41,10 +41,19 @@ app.use(cors(corsOptions));
 
 app.use('/api', routes)
 
+ app.get("/auth/insta", passport.authenticate("instagram", { scope: ['email']})); 
+
+//once permission to exchange data is granted, a callback will be fired
 app.get(
-    '/auth/google',
-    passport.authenticate('google', { scope: ['profile', 'email'] })
-  );
+    "/auth/insta/callback",
+    passport.authenticate("instagram", { failureRedirect: "/auth/insta" }),
+    // Redirect user back to the mobile app using deep linking
+    (req, res) => {
+      res.redirect(
+        `baumnews://app/SignIn?email=${req.user.email}/pass=${req.user.password}/status=${req.user.verified}`
+      );
+    }
+); 
 
  app.get("/auth/facebook", passport.authenticate("facebook", { scope: ['email']})); 
 
@@ -59,6 +68,12 @@ app.get(
       );
     }
 ); 
+
+app.get(
+  '/auth/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+);
+
   // Google authentication callback route
 app.get(
     '/auth/google/callback',
