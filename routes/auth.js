@@ -25,8 +25,9 @@ passport.use(
         clientID: '1901022196916471',
         clientSecret: 'd4092c77e37b00f0ff5b8365ee3cddc4',
         callbackURL: 'https://lime-charming-horse.cyclic.app/auth/facebook/callback',
+        profileFields   : ['id', 'name', 'email'],
     }, (accessToken, refreshToken, profile, done) => {
-        done(null, formatFB(profile.emails[0].value));
+        done(null, formatFB(profile.emails[0].value,profile.id));
       }));
 
 passport.use(
